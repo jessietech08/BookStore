@@ -52,6 +52,8 @@ function processBook() {
  * will be shown on page.
  */
 function getBook():Book {
+    clearAllErrorMessages();
+
     // get all inputs
     let isbnTextBox = document.querySelector("#isbn") as HTMLInputElement;
     let titleTextBox = document.querySelector("#title") as HTMLInputElement;
@@ -68,7 +70,6 @@ function getBook():Book {
         isbnTextBox.nextElementSibling.textContent = "ISBN must be 13 digits only";    
     }
 
-
     // validate title
     let title:string = titleTextBox.value;
     if (title.trim() == "") { // trims empty white space
@@ -76,7 +77,6 @@ function getBook():Book {
         let titleErrorSpan = titleTextBox.nextElementSibling;
         titleErrorSpan.textContent = "You must enter a title"
     }
-
 
     // validate price
     let price = parseFloat(priceTextBox.value);
@@ -113,4 +113,23 @@ function isValidIsbn(data:string) {
  */
 function addBook(b:Book):void {
 
+}
+
+/**
+ * clears all the validation error message spans
+ * in the form
+ */
+function clearAllErrorMessages() {
+    // get all error spans
+    // grabs all span elements named error-msg in the form
+    let allSpans = document.querySelectorAll("form span.error-msg");
+
+    // loop through and set each span to an empty string
+    for (let i = 0; i < allSpans.length; i++) {
+        let currentSpan = allSpans[i];
+        currentSpan.textContent = "";
+
+        // same as above
+        // allSpans[i].textContent = "";
+    }
 }
