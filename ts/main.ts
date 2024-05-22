@@ -90,7 +90,19 @@ function getBook():Book {
         addedBook.isbn = isbn;
         addedBook.price = price;
         addedBook.title = title;
-        addedBook.releaseDate = new Date(releaseDate);
+
+        // the value of input type date is off 
+        // by one day because of time zone issue.
+        // this solution resolves time zone issue
+        // split date string into array "2024-5-22"
+        // result would be {"2024", "10", "24"}
+        const dateParts:string[] = releaseDate.split("-");
+        const year = parseInt(dateParts[0]);
+        const month = parseInt(dateParts[1]) - 1; // subtract 1 because months are index based
+        const day = parseInt(dateParts[2]);
+        const correctDate = new Date(year, month, day);
+
+        addedBook.releaseDate = new Date(correctDate);
 
         return addedBook;
     }
