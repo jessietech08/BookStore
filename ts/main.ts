@@ -168,26 +168,16 @@ function addBookToStorage(b:Book):void {
     // read existing books out of storage
     let bookData = localStorage.getItem("Books");
 
-    // if book data is null, the "Books" key did not exist
-    if (bookData == null) {
-        // create a new list and add our current book
-        let books:Book[] = [];
-        books.push(b);
+    // initialize with existing bookData is not null, or empty array if null
+    // this is a JS ternary/conditional operator
+    let books:Book[] = bookData? JSON.parse(bookData) : [];
+    
+    books.push(b);
 
-        // add to localStorage
-     bookData = JSON.stringify(books);
-     localStorage.setItem(BookStorageKey, bookData);
-    }
-    else {
-        // parse string into a list of books and add new book to the list
-        // store the newly modified list back in storage
-        let books:Book[] = JSON.parse(bookData);
-        books.push(b);
-
-        // add back to localStorage
-        bookData = JSON.stringify(books);
-        localStorage.setItem(BookStorageKey, bookData);
-    }
+    // add to localStorage
+    bookData = JSON.stringify(books);
+    localStorage.setItem(BookStorageKey, bookData);
+    
 }
 
 /**
